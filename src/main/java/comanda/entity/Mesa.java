@@ -2,12 +2,11 @@ package comanda.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,29 +22,14 @@ public class Mesa {
 	private Integer sillas;
 	@Column(name = "MESA_OBSERV")
 	private String observacion;
-	@ManyToOne
+	// @Column(name = "MESA_ESTADO")
+	// private String estado;
+	@OneToOne
 	@JoinColumn(name = "MESA_ESTADO") // "idEstado")
 	private Estado estado;
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "MESA_USUARIO") // "idUsuario")
-	private Usuario usuario;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "MESA_LOCAL") // "idLocal")
-	private Local local;
-
-	public Mesa() {
-		super();		
-	}
-
-	public Mesa(Integer id, Integer sillas, String observacion, Estado estado, Usuario usuario, Local local) {		
-		this.id = id;
-		this.sillas = sillas;
-		this.observacion = observacion;
-		this.estado = estado;
-		this.usuario = usuario;
-		this.local = local;
-	}
-
+	// @OneToOne
+	// @JoinColumn(name = "MESA_LOCAL") // "idLocal")
+	// private Local local;
 	public Integer getId() {
 		return id;
 	}
@@ -76,22 +60,6 @@ public class Mesa {
 
 	public void setEstado(Estado estado) {
 		this.estado = estado;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public Local getLocal() {
-		return local;
-	}
-
-	public void setLocal(Local local) {
-		this.local = local;
 	}
 
 	@Override

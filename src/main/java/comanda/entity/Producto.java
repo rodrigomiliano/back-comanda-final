@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,29 +24,9 @@ public class Producto {
 	private String descripcion;
 	@Column(name = "PRODUC_PRECIO")
 	private Double precio;
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "PRODUC_CATEGO") // "idCategoria")
 	private Categoria categoria;
-	@Column(name = "PRODUC_IMG")
-	private String imagen;
-	@ManyToOne
-	@JoinColumn(name = "PRODUC_LOCAL") // "idCategoria")
-	private Local local;
-	
-	
-
-	public Producto() {
-		super();		
-	}
-
-	public Producto(String nombre, String descripcion, Double precio, Categoria categoria, String imagen) {
-		super();		
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.precio = precio;
-		this.categoria = categoria;
-		this.imagen = imagen;
-	}
 
 	public Integer getId() {
 		return id;
@@ -80,40 +60,24 @@ public class Producto {
 		this.precio = precio;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
-	}
-
 	/*
-	 * public String getCategoria() { return categoria.getNombre(); }
+	 * public Categoria getCategoria() { return categoria; }
 	 */
+	public String getCategoria() {
+		return categoria.getNombre();
+	}
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
 
-	public String getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(String imagen) {
-		this.imagen = imagen;
-	}
-	
-	public Local getLocal() {
-		return local;
-	}
-
-	public void setLocal(Local local) {
-		this.local = local;
-	}
-
 	@Override
 	public String toString() {
 		return "Producto [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio
-				+ ", categoria=" + categoria + ", imagen=" + imagen + ", local=" + local + "]";
+				+ ", categoria=" + categoria + "]";
 	}
 
+	
 	public ItemComanda get(int i) {
 		// TODO Auto-generated method stub
 		return null;
@@ -123,5 +87,5 @@ public class Producto {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+    
 }

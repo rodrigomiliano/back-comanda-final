@@ -1,30 +1,18 @@
 package comanda.entity;
 
-import java.util.List;
-import javax.persistence.CascadeType;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import lombok.Builder;
-import lombok.Data;
-
-@Data
-//@NoArgsConstructor
-//@AllArgsConstructor
-@Builder
-
 
 @Entity
-@Table(name = "Mesausos") // Esto debe coincidir con el nombre de la tabla tal cual en bd.
+@Table(name = "Mesauso") // Esto debe coincidir con el nombre de la tabla tal cual en bd.
 public class MesaUso {
 
 	@Id // para que se sepa que es primary key
@@ -37,26 +25,18 @@ public class MesaUso {
 
 	// private Date fin;
 
-	@ManyToOne
-	@JoinColumn(name = "MESAUSO_MESA") // "idMesa")
-	private Mesa mesa;
+	// private Mesa mesa;
 
-	// @Column(name = "MESAUSO_TOTAL")
-	// private Double Total;
+	// private Comanda comanda;
 
-	@OneToMany(mappedBy = "mesaUso", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
-	@JsonManagedReference
-	private List<Comanda> comandas;
+	@OneToOne
+	@JoinColumn(name = "MESAUSO_ITEMCOM") // "idEstado")
+	private ItemComanda itemComanda;
 
-	public MesaUso() {
-		super();
-	}
+	@Column(name = "MESAUSO_TOTAL")
+	private Double Total;
 
-	public MesaUso(Integer id, Mesa mesa, List<Comanda> comandas) {
-		this.id = id;
-		this.mesa = mesa;
-		this.comandas = comandas;
-	}
+	// private Comprobante comprobante;
 
 	public Integer getId() {
 		return id;
@@ -66,25 +46,25 @@ public class MesaUso {
 		this.id = id;
 	}
 
-	public Mesa getMesa() {
-		return mesa;
+	public ItemComanda getItemComanda() {
+		return itemComanda;
 	}
 
-	public void setMesa(Mesa mesa) {
-		this.mesa = mesa;
+	public void setItemComanda(ItemComanda itemComanda) {
+		this.itemComanda = itemComanda;
 	}
 
-	public List<Comanda> getComandas() {
-		return comandas;
+	public Double getTotal() {
+		return Total;
 	}
 
-	public void setComandas(List<Comanda> comandas) {
-		this.comandas = comandas;
+	public void setTotal(Double total) {
+		Total = total;
 	}
 
 	@Override
 	public String toString() {
-		return "MesaUso [id=" + id + ", mesa=" + mesa + "]";
+		return "MesaUso [id=" + id + ", itemComanda=" + itemComanda + ", Total=" + Total + "]";
 	}
 
 }

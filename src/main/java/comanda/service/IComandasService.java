@@ -10,5 +10,4 @@ public interface IComandasService {
 	void guardar(Comanda comanda);
 	void eliminar(int idComanda);
 	Optional<Comanda> buscarComanda(int idComanda);
-	void crearItemComanda(Comanda comanda);	
 }
