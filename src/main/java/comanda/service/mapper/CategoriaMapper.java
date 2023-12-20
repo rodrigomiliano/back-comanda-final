@@ -18,9 +18,9 @@ public interface CategoriaMapper {
 	CategoriaResponse mapToCategoriaDto(Categoria categoria);
 
 	List<CategoriaResponse> mapToCategoriaResponseList(List<Categoria> categorias);
-	
+
 	Categoria mapToCategoria(CategoriaInsertDto categoriaDto);
-	
-	Categoria mapToCategoria(CategoriaUpdateDto categoriaDto);	
-	
+
+	Categoria mapToCategoria(CategoriaUpdateDto categoriaDto);
+
 }
