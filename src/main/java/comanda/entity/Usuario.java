@@ -6,10 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import comanda.form.FormUsuario;
 
 @Entity
 @Table(name = "Usuarios") // Esto debe coincidir con el nombre de la tabla tal cual en bd.
@@ -36,22 +34,29 @@ public class Usuario {
 	private String contrasena;
 	// @Column(name = "USER_ROL")
 	// private Integer rol;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "USER_ROL") // "idRol")
 	private Rol rol;
 
-	public Usuario(FormUsuario formUsuario) {
-		this.id = formUsuario.getId();
-		this.apellido = formUsuario.getApellido();
-		this.nombre = formUsuario.getNombre();
-		this.contrasena = formUsuario.getContrasena();
-		this.email = formUsuario.getEmail();
-		this.dni = formUsuario.getDni();
-		this.telefono = formUsuario.getTelefono();
-		this.usuario = formUsuario.getUsuario();
-	}
-
+	/*@OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)	
+	@JsonManagedReference	
+	private List<UsuarioLocal> usuariosLocales;*/
+		
 	public Usuario() {
+		super();		
+	}
+		
+	public Usuario(String usuario, String nombre, String apellido, Integer dni, String email, String telefono,
+			String contrasena, Rol rol) {
+		super();
+		this.usuario = usuario;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.email = email;
+		this.telefono = telefono;
+		this.contrasena = contrasena;
+		this.rol = rol;		
 	}
 
 	public Integer getId() {
@@ -118,17 +123,19 @@ public class Usuario {
 		this.contrasena = contrasena;
 	}
 
-	/*
-	 * public Rol getRol() { return rol; }
-	 */
+	public Rol getRol() {
+		return rol;
+	}
+	/*public String getRol() {
+		return rol.getNombre();
+	}*/
 
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
 
-	public Rol getRol() {
-		return rol;
-	}
+	
+
 
 	@Override
 	public String toString() {
@@ -136,5 +143,14 @@ public class Usuario {
 				+ dni + ", email=" + email + ", telefono=" + telefono + ", contrasena=" + contrasena + ", rol=" + rol
 				+ "]";
 	}
+	
+	public UsuarioLocal get(int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	public int size() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

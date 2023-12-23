@@ -6,8 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "ItemComandas") // Esto debe coincidir con el nombre de la tabla tal cual en bd.
@@ -19,19 +21,47 @@ public class ItemComanda {
 	@Column(name = "ITEMCOM_ID")
 	private Integer id;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "ITEMCOM_COMANDA") // "idComanda")
+	@JsonBackReference
 	private Comanda comanda;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "ITEMCOM_PRODUC") // "idProducto")
 	private Producto producto;
+
+	@Column(name = "ITEMCOM_PRECIO")
+	private Double precio;
 
 	@Column(name = "ITEMCOM_CANTIDAD")
 	private Integer cantidad;
 
 	@Column(name = "ITEMCOM_TOTAL")
 	private Double total;
+
+	public ItemComanda() {
+		super();		
+	}
+		
+	public ItemComanda(/*Integer id,*/ Comanda comanda, Producto producto, Double precio, Integer cantidad, Double total) {
+		super();
+		//this.id = id;
+		this.comanda = comanda;
+		this.producto = producto;
+		this.precio = precio;
+		this.cantidad = cantidad;
+		this.total = total;
+	}
+
+	/*public ItemComanda(Comanda comanda, Producto producto, Integer cantidad) {				
+		this.comanda = comanda;
+		this.producto = producto;
+		this.precio = producto.getPrecio();
+		this.cantidad = cantidad;
+		this.total = this.precio * this.cantidad;
+	}*/
+
+	
 
 	public Integer getId() {
 		return id;
@@ -41,12 +71,8 @@ public class ItemComanda {
 		this.id = id;
 	}
 
-	/*
-	 * public Comanda getComanda() { return comanda; }
-	 */
-
-	public Integer getComanda() {
-		return comanda.getId();
+	public Comanda getComanda() {
+		return comanda;
 	}
 
 	public void setComanda(Comanda comanda) {
@@ -61,6 +87,14 @@ public class ItemComanda {
 		this.producto = producto;
 	}
 
+	public Double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(Double precio) {
+		this.precio = precio;
+	}
+
 	public Integer getCantidad() {
 		return cantidad;
 	}
@@ -73,8 +107,8 @@ public class ItemComanda {
 		return total;
 	}
 
-	public void setTotal() {
-		this.total = getProducto().getPrecio() * this.cantidad;
+	public void setTotal(Double total) {
+		this.total = total;
 	}
 
 	@Override
