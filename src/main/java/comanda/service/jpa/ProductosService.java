@@ -36,35 +36,29 @@ public class ProductosService implements IProductosService {
 	private ILocalesService serviceLocales;
 
 	public List<Producto> buscarTodos() {
-		System.out.println("------------------------------------------------------------");
-		List<Producto> productos = repoProductos.findAll();
-		System.out.println("Listado de Productos: ");
-		productos.forEach(t -> {
-			System.out.println(t);
-		});
 		return repoProductos.findAll();
 	}
 
 	public Producto guardar(Producto producto, Integer categoriaId, Integer localId) throws ComandaServiceException {
 		System.out.println("------------------------------------------------------------");
 
-		LOGGER.info(">>>>>> Producto a guardar: " + producto);
-		LOGGER.info(">>>>>> categoriaId: " + categoriaId);
-		LOGGER.info(">>>>>> localId: " + localId);
+		LOGGER.info("----- Producto a guardar: " + producto);
+		LOGGER.info("----- categoriaId: " + categoriaId);
+		LOGGER.info("----- localId: " + localId);
 
 		if (categoriaId != null && localId != null) {
 			// Buscar la categoría por ID usando serviceCategorias
 			Categoria categoria = serviceCategorias.buscarCategoria(categoriaId);
 			Local local = serviceLocales.buscarLocal(localId);
 
-			LOGGER.info(">>>>>> categoria: " + categoria);
-			LOGGER.info(">>>>>> local: " + local);
+			LOGGER.info("----- categoria: " + categoria);
+			LOGGER.info("----- local: " + local);
 
 			if (categoria != null && local != null) {
 				producto.setCategoria(categoria);
 				// Asignar el local al producto si se encuentra
 				producto.setLocal(local);
-				LOGGER.info(">>>>>> Producto a guardar via el repo: " + producto);
+				LOGGER.info("----- Producto a guardar via el repo: " + producto);
 				System.out.println("Guardando " + producto);
 				return repoProductos.save(producto);
 			} else {
@@ -79,9 +73,9 @@ public class ProductosService implements IProductosService {
 	public Producto modificar(Producto producto, Integer categoriaId, Integer localId) throws ComandaServiceException {
 		System.out.println("------------------------------------------------------------");
 
-		LOGGER.info(">>>>>> Producto a guardar: " + producto);
-		LOGGER.info(">>>>>> categoriaId: " + categoriaId);
-		LOGGER.info(">>>>>> localId: " + localId);
+		LOGGER.info("----- Producto a guardar: " + producto);
+		LOGGER.info("----- categoriaId: " + categoriaId);
+		LOGGER.info("----- localId: " + localId);
 
 		// Buscar el producto existente
 		Producto productoNew = null;
@@ -103,7 +97,7 @@ public class ProductosService implements IProductosService {
 		LOGGER.info("Local actual: " + producto.getLocal());
 
 		LOGGER.info("prod: " + producto.toString());
-		LOGGER.info(">>>>>> Producto a guardar via el repo: " + producto);
+		LOGGER.info("----- Producto a guardar via el repo: " + producto);
 		System.out.println("Guardando " + producto);
 
 		return guardar(producto, categoriaId, localId);
@@ -129,13 +123,20 @@ public class ProductosService implements IProductosService {
 	}
 
 	public List<Producto> buscarProductosPorLocal(Integer localId) {
+
 		return repoProductos.findByLocalId(localId);
+	}
+
+	@Override
+	public Producto guardar(Producto producto) {
+		return repoProductos.save(producto);
 	}
 
 	public Optional<Producto> findById(int idProducto) {
 		return repoProductos.findById(idProducto);
 	}
 
+	@Override
 	public List<Producto> buscarTodosPorLocal(Integer idLocal) {
 		Producto prod = new Producto();
 		Optional<Local> local = repoLocal.findById(idLocal);
@@ -146,5 +147,4 @@ public class ProductosService implements IProductosService {
 		}
 		return null;
 	}
-
 }

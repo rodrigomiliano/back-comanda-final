@@ -45,7 +45,11 @@ public class Usuario {
 	public Usuario() {
 		super();		
 	}
-		
+	public Usuario(String name) {
+		super();
+		this.nombre = name;
+	}
+
 	public Usuario(String usuario, String nombre, String apellido, Integer dni, String email, String telefono,
 			String contrasena, Rol rol) {
 		super();

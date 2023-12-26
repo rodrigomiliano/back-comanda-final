@@ -1,17 +1,12 @@
 package comanda.controller;
 
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import comanda.controller.dto.request.CategoriaInsertDto;
 import comanda.controller.dto.request.CategoriaUpdateDto;
 import comanda.controller.dto.response.CategoriaResponse;
@@ -20,15 +15,15 @@ import comanda.service.ComandaServiceException;
 import comanda.service.ICategoriasService;
 import comanda.service.mapper.CategoriaMapper;
 
-
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/comanda")
 public class CategoriasController {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(ProductosController.class);
 
 	@Autowired
-	private ICategoriasService serviceCategorias;	
+	private ICategoriasService serviceCategorias;
 
 	private final CategoriaMapper categoriaMapper = CategoriaMapper.INSTANCE;
 
@@ -67,18 +62,18 @@ public class CategoriasController {
 		CategoriaResponse categoriaResponse = categoriaMapper.mapToCategoriaDto(categoria);
 		LOGGER.info(">>>>>> categoriaResponse: " + categoriaResponse);
 
-		return categoriaResponse;		
+		return categoriaResponse;
 	}
 
-	/*@PutMapping("/categoria")
-	public Categoria modificar(@RequestBody Categoria categoria) throws ComandaServiceException {
-		serviceCategorias.guardar(categoria);
-		return categoria;
-	}*/
+	/*
+	 * @PutMapping("/categoria") public Categoria modificar(@RequestBody Categoria
+	 * categoria) throws ComandaServiceException {
+	 * serviceCategorias.guardar(categoria); return categoria; }
+	 */
 
 	@PutMapping("/categoria/{id}")
-	public CategoriaResponse modificar(@PathVariable("id") int idCategoria, @RequestBody CategoriaUpdateDto categoriaDto)
-			throws ComandaServiceException {
+	public CategoriaResponse modificar(@PathVariable("id") int idCategoria,
+			@RequestBody CategoriaUpdateDto categoriaDto) throws ComandaServiceException {
 
 		Categoria categoria = null;
 		categoria = categoriaMapper.mapToCategoria(categoriaDto);

@@ -1,19 +1,9 @@
 package comanda.controller;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import comanda.controller.dto.request.ProductoInsertDto;
 import comanda.controller.dto.request.ProductoUpdateDto;
@@ -27,7 +17,11 @@ import comanda.service.IProductosService;
 import comanda.service.IUsuarioLocalesService;
 import comanda.service.mapper.ProductoMapper;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/comanda")
 public class ProductosController {
 
@@ -46,6 +40,8 @@ public class ProductosController {
 		List<ProductoResponse> response = productoMapper.mapToProductoResponseList(productos);
 		return response;
 	}
+
+
 
 	@PostMapping("/buscarproducto")
 	public List<Producto> buscarTodosPorUsuario(@RequestBody FormUsuario formUsuario) {
