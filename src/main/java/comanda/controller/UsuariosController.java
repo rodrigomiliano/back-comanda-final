@@ -1,6 +1,11 @@
 package comanda.controller;
 
 import java.util.List;
+
+import comanda.form.FormLogin;
+import comanda.service.exception.InvalidPasswordException;
+import comanda.service.exception.RolNoEncontradoException;
+import comanda.service.exception.UsuarioNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +70,14 @@ public class UsuariosController {
         LOGGER.info(">>>>>> usuarioResponse: " + usuarioResponse);
 
         return usuarioResponse;
+    }
+    @PostMapping("/login")
+    public Usuario guardar(@RequestBody FormLogin formLogin) throws RolNoEncontradoException {
+        try {
+            return serviceUsuarios.login(formLogin);
+        } catch (UsuarioNotFoundException | InvalidPasswordException e) {
+            return null;
+        }
     }
 
     @PutMapping("/usuario/{id}")

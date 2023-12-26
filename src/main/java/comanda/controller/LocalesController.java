@@ -36,9 +36,15 @@ public class LocalesController {
 	}
 	@PostMapping("/localPorUsuario")
 	public List<LocalResponse> buscarTodosPorUsuario(@RequestBody Usuario usuario) {
-		List<Local> locales = serviceLocales.buscarTodosPorUsuario(usuario);
-		List<LocalResponse> response = localMapper.mapToLocalResponseList(locales);
-		return response;
+		if (usuario!=null && usuario.getId()!=null) {
+			List<Local> locales = serviceLocales.buscarTodosPorUsuario(usuario);
+			List<LocalResponse> response = localMapper.mapToLocalResponseList(locales);
+			return response;
+		}
+		else {
+			return localMapper.mapToLocalResponseList(serviceLocales.buscarTodos());
+		}
+
 	}
 
 	@GetMapping("/local/{id}")

@@ -3,9 +3,13 @@ package comanda.service.jpa;
 import java.util.List;
 import java.util.Optional;
 
+import comanda.form.FormLogin;
+import comanda.service.exception.InvalidPasswordException;
+import comanda.service.exception.UsuarioNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import comanda.entity.Rol;
@@ -101,6 +105,23 @@ public class UsuariosService implements IUsuariosService {
     public void eliminar(int idUsuario) throws Exception {
         System.out.println("Eliminando registro: " + buscarUsuario(idUsuario));
         repoUsuarios.deleteById(idUsuario);
+    }
+    @Override
+    public Usuario login(FormLogin formLogin) throws UsuarioNotFoundException, InvalidPasswordException {
+        if (formLogin == null || formLogin.getEmail() == null || formLogin.getPassword() == null) {
+            throw new UsuarioNotFoundException();
+        }
+        Usuario user = new Usuario();
+        user.setEmail(formLogin.getEmail());
+        Example<Usuario> example = Example.of(user);
+        Optional<Usuario> userFound = repoUsuarios.findOne(example);
+        if (!userFound.isPresent()) {
+            throw new UsuarioNotFoundException();
+        }
+        if (!userFound.get().getContrasena().equals(formLogin.getPassword())) {
+            throw new InvalidPasswordException();
+        }
+        return userFound.get();
     }
 
     public Usuario buscarUsuario(int idUsuario) throws ComandaServiceException {
