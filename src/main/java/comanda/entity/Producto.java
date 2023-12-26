@@ -30,17 +30,15 @@ public class Producto {
 	@Column(name = "PRODUC_IMG")
 	private String imagen;
 	@ManyToOne
-	@JoinColumn(name = "PRODUC_LOCAL") // "idCategoria")
+	@JoinColumn(name = "PRODUC_LOCAL")
 	private Local local;
-	
-	
 
 	public Producto() {
-		super();		
+		super();
 	}
 
 	public Producto(String nombre, String descripcion, Double precio, Categoria categoria, String imagen) {
-		super();		
+		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio = precio;
@@ -84,10 +82,6 @@ public class Producto {
 		return categoria;
 	}
 
-	/*
-	 * public String getCategoria() { return categoria.getNombre(); }
-	 */
-
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
@@ -99,14 +93,6 @@ public class Producto {
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
-	
-	public Local getLocal() {
-		return local;
-	}
-
-	public void setLocal(Local local) {
-		this.local = local;
-	}
 
 	@Override
 	public String toString() {
@@ -114,14 +100,12 @@ public class Producto {
 				+ ", categoria=" + categoria + ", imagen=" + imagen + ", local=" + local + "]";
 	}
 
-	public ItemComanda get(int i) {
-		// TODO Auto-generated method stub
-		return null;
+	public Local getLocal() {
+		return local;
 	}
 
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void setLocal(Local local) {
+		this.local = local;
 	}
 
 }

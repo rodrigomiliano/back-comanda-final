@@ -1,6 +1,8 @@
 package comanda.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import comanda.controller.dto.request.ProductoInsertDto;
 import comanda.controller.dto.request.ProductoUpdateDto;
 import comanda.controller.dto.response.ProductoResponse;
+import comanda.entity.Local;
 import comanda.entity.Producto;
+import comanda.entity.UsuarioLocal;
+import comanda.form.FormUsuario;
 import comanda.service.ComandaServiceException;
 import comanda.service.IProductosService;
+import comanda.service.IUsuarioLocalesService;
 import comanda.service.mapper.ProductoMapper;
 
 @RestController
@@ -26,9 +32,11 @@ import comanda.service.mapper.ProductoMapper;
 public class ProductosController {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(ProductosController.class);
-	
+
 	@Autowired
 	private IProductosService serviceProductos;
+	@Autowired
+	private IUsuarioLocalesService serviceUsuarioLocales;
 
 	private final ProductoMapper productoMapper = ProductoMapper.INSTANCE;
 
@@ -37,6 +45,18 @@ public class ProductosController {
 		List<Producto> productos = serviceProductos.buscarTodos();
 		List<ProductoResponse> response = productoMapper.mapToProductoResponseList(productos);
 		return response;
+	}
+
+	@PostMapping("/buscarproducto")
+	public List<Producto> buscarTodosPorUsuario(@RequestBody FormUsuario formUsuario) {
+		if (formUsuario != null && formUsuario.getId() != null) {
+			Optional<UsuarioLocal> usuarioLocal = serviceUsuarioLocales.buscarUsuarioLocal(formUsuario.getId());
+			if (usuarioLocal.isPresent()) {
+				Local local = usuarioLocal.get().getLocal();
+				return serviceProductos.buscarTodosPorLocal(local.getId());
+			}
+		}
+		return serviceProductos.buscarTodos();
 	}
 
 	@GetMapping("/producto/{id}")
@@ -77,12 +97,12 @@ public class ProductosController {
 
 		return productoResponse;
 	}
-		
-	/*@PutMapping("/producto")
-	public Producto modificar(@RequestBody Producto producto) throws ComandaServiceException {
-		serviceProductos.guardar(producto, null);
-		return producto;
-	}*/	
+
+	/*
+	 * @PutMapping("/producto") public Producto modificar(@RequestBody Producto
+	 * producto) throws ComandaServiceException { serviceProductos.guardar(producto,
+	 * null); return producto; }
+	 */
 
 	@PutMapping("/producto/{id}")
 	public ProductoResponse modificar(@PathVariable("id") int idProducto, @RequestBody ProductoUpdateDto productoDto)
@@ -116,12 +136,12 @@ public class ProductosController {
 		}
 		return "Registro Eliminado";
 	}
-	
+
 	@GetMapping("/producto/local/{idLocal}")
 	public List<ProductoResponse> buscarProductosPorLocal(@PathVariable("idLocal") int idLocal) {
-	    List<Producto> productos = serviceProductos.buscarProductosPorLocal(idLocal);
-	    List<ProductoResponse> response = productoMapper.mapToProductoResponseList(productos);
-	    return response;
+		List<Producto> productos = serviceProductos.buscarProductosPorLocal(idLocal);
+		List<ProductoResponse> response = productoMapper.mapToProductoResponseList(productos);
+		return response;
 	}
 
 }
