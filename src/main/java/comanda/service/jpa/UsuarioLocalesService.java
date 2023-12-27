@@ -2,6 +2,8 @@ package comanda.service.jpa;
 
 import java.util.List;
 import java.util.Optional;
+
+import comanda.entity.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +40,7 @@ public class UsuarioLocalesService implements IUsuarioLocalesService{
 	
 	public Optional<UsuarioLocal> buscarUsuarioLocal(int idUsuarioLocal) {
 		System.out.println("------------------------------------------------------------");
-		Optional<UsuarioLocal> optional = repoUsuarioLocales.findById(idUsuarioLocal);
+		Optional<UsuarioLocal> optional = repoUsuarioLocales.findByUsuarioId(idUsuarioLocal);
 		if (optional.isPresent()) {
 			UsuarioLocal u = optional.get();
 			System.out.println("Elegiste " + u);
@@ -46,6 +48,18 @@ public class UsuarioLocalesService implements IUsuarioLocalesService{
 		} else {
 			System.out.println("------------------------------------------------------------");
 			System.out.println("No existe el Usuario - Local n° " + idUsuarioLocal);
+		}
+		return null;
+	}
+
+	public Local buscarLocalDeUsuario(int idUsuario) {
+		Optional<UsuarioLocal> optional = repoUsuarioLocales.findByUsuarioId(idUsuario);
+		if (optional.isPresent()) {
+			UsuarioLocal u = optional.get();
+			return u.getLocal();
+		} else {
+			System.out.println("------------------------------------------------------------");
+			System.out.println("No existe el Usuario - Local n° " + idUsuario);
 		}
 		return null;
 	}

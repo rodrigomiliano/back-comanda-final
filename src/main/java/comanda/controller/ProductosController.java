@@ -10,7 +10,6 @@ import comanda.controller.dto.request.ProductoUpdateDto;
 import comanda.controller.dto.response.ProductoResponse;
 import comanda.entity.Local;
 import comanda.entity.Producto;
-import comanda.entity.UsuarioLocal;
 import comanda.form.FormUsuario;
 import comanda.service.ComandaServiceException;
 import comanda.service.IProductosService;
@@ -18,7 +17,6 @@ import comanda.service.IUsuarioLocalesService;
 import comanda.service.mapper.ProductoMapper;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -46,9 +44,8 @@ public class ProductosController {
 	@PostMapping("/buscarproducto")
 	public List<Producto> buscarTodosPorUsuario(@RequestBody FormUsuario formUsuario) {
 		if (formUsuario != null && formUsuario.getId() != null) {
-			Optional<UsuarioLocal> usuarioLocal = serviceUsuarioLocales.buscarUsuarioLocal(formUsuario.getId());
-			if (usuarioLocal.isPresent()) {
-				Local local = usuarioLocal.get().getLocal();
+			Local local = serviceUsuarioLocales.buscarLocalDeUsuario(formUsuario.getId());
+			if (local != null) {
 				return serviceProductos.buscarTodosPorLocal(local.getId());
 			}
 		}
