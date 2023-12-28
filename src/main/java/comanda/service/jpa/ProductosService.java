@@ -1,5 +1,6 @@
 package comanda.service.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -135,6 +136,26 @@ public class ProductosService implements IProductosService {
 	public Optional<Producto> findById(int idProducto) {
 		return repoProductos.findById(idProducto);
 	}
+	
+	public List<Producto> buscarProductosPorCategoria(Integer categoriaId) {
+	    return repoProductos.findByCategoriaId(categoriaId);
+	}
+
+	public List<Local> buscarLocalesPorCategoria(Integer categoriaId) {
+	    // Lógica para buscar locales por categoría
+	    List<Producto> productos = repoProductos.findByCategoriaId(categoriaId);
+	    List<Local> localesConProductosDeCategoria = new ArrayList<>();
+
+	    for (Producto producto : productos) {
+	        Local local = producto.getLocal();
+	        if (!localesConProductosDeCategoria.contains(local)) {
+	            localesConProductosDeCategoria.add(local);
+	        }
+	    }
+
+	    return localesConProductosDeCategoria;
+	}
+
 
 	@Override
 	public List<Producto> buscarTodosPorLocal(Integer idLocal) {

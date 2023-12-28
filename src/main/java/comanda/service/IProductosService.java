@@ -2,6 +2,7 @@ package comanda.service;
 
 import java.util.List;
 import java.util.Optional;
+import comanda.entity.Local;
 import comanda.entity.Producto;
 
 public interface IProductosService {
@@ -17,6 +18,8 @@ public interface IProductosService {
 	Producto buscarProducto(int idProducto) throws ComandaServiceException;
 
 	List<Producto> buscarProductosPorLocal(Integer localId);
+	List<Producto> buscarProductosPorCategoria(Integer idCategoria);
+	List<Local> buscarLocalesPorCategoria(Integer idCategoria);
 
 	Producto guardar(Producto producto);
 
