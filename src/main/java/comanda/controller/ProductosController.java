@@ -144,23 +144,5 @@ public class ProductosController {
 	    List<Producto> productos = serviceProductos.buscarProductosPorCategoria(idCategoria);
 	    List<ProductoResponse> response = productoMapper.mapToProductoResponseList(productos);
 	    return response;
-	}
-
-	@GetMapping("/local/categoria/{idCategoria}")
-    public List<Local> buscarLocalesPorCategoria(@PathVariable("idCategoria") int idCategoria) {
-        List<Producto> productos = serviceProductos.buscarProductosPorCategoria(idCategoria);
-        List<Local> localesConProductosDeCategoria = new ArrayList<>();
-
-        for (Producto producto : productos) {
-            // Obtener el local asociado al producto
-            Local local = producto.getLocal();
-            // Verificar si el local ya está en la lista para evitar duplicados
-            if (!localesConProductosDeCategoria.contains(local)) {
-                localesConProductosDeCategoria.add(local);
-            }
-        }
-
-        return localesConProductosDeCategoria;
-    }
-
+	}	
 }

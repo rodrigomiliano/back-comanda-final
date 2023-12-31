@@ -19,8 +19,7 @@ public interface IProductosService {
 
 	List<Producto> buscarProductosPorLocal(Integer localId);
 	List<Producto> buscarProductosPorCategoria(Integer idCategoria);
-	List<Local> buscarLocalesPorCategoria(Integer idCategoria);
-
+	
 	Producto guardar(Producto producto);
 
 	List<Producto> buscarTodosPorLocal(Integer id);

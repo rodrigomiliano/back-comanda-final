@@ -1,5 +1,6 @@
 package comanda.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import comanda.entity.Usuario;
@@ -12,8 +13,10 @@ import comanda.controller.dto.request.LocalInsertDto;
 import comanda.controller.dto.request.LocalUpdateDto;
 import comanda.controller.dto.response.LocalResponse;
 import comanda.entity.Local;
+import comanda.entity.Producto;
 import comanda.service.ComandaServiceException;
 import comanda.service.ILocalesService;
+import comanda.service.IProductosService;
 import comanda.service.mapper.LocalMapper;
 
 @RestController
@@ -25,6 +28,9 @@ public class LocalesController {
 
 	@Autowired
 	private ILocalesService serviceLocales;
+	
+	@Autowired
+	private IProductosService serviceProductos;
 
 	private final LocalMapper localMapper = LocalMapper.INSTANCE;
 
@@ -109,5 +115,5 @@ public class LocalesController {
 			e.printStackTrace();
 		}
 		return "Registro Eliminado";
-	}
+	}		
 }

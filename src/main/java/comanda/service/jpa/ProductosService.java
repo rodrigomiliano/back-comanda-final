@@ -141,22 +141,6 @@ public class ProductosService implements IProductosService {
 	    return repoProductos.findByCategoriaId(categoriaId);
 	}
 
-	public List<Local> buscarLocalesPorCategoria(Integer categoriaId) {
-	    // Lógica para buscar locales por categoría
-	    List<Producto> productos = repoProductos.findByCategoriaId(categoriaId);
-	    List<Local> localesConProductosDeCategoria = new ArrayList<>();
-
-	    for (Producto producto : productos) {
-	        Local local = producto.getLocal();
-	        if (!localesConProductosDeCategoria.contains(local)) {
-	            localesConProductosDeCategoria.add(local);
-	        }
-	    }
-
-	    return localesConProductosDeCategoria;
-	}
-
-
 	@Override
 	public List<Producto> buscarTodosPorLocal(Integer idLocal) {
 		Producto prod = new Producto();

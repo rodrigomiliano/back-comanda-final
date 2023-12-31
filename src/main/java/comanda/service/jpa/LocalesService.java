@@ -1,5 +1,6 @@
 package comanda.service.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import comanda.entity.Local;
 import comanda.repository.LocalesRepository;
+import comanda.repository.ProductosRepository;
 import comanda.service.ComandaServiceException;
 import comanda.service.ILocalesService;
 
@@ -28,6 +30,9 @@ public class LocalesService implements ILocalesService {
 
     @Autowired
     private LocalesRepository repoLocales;
+    
+    @Autowired
+    private ProductosRepository repoProductos;
 
     @Autowired
     private UsuarioLocalesRepository repoUsuarioLocales;
@@ -64,6 +69,7 @@ public class LocalesService implements ILocalesService {
         localNew.setCodigo_postal(local.getCodigo_postal());
         localNew.setTelefono(local.getTelefono());
         localNew.setImagen(local.getImagen());
+        localNew.setDescripcion(local.getDescripcion());
 
         LOGGER.info("Local modificado: " + localNew.toString());
         System.out.println("Guardando cambios en " + localNew);
@@ -89,7 +95,7 @@ public class LocalesService implements ILocalesService {
             System.out.println("No existe el Local n° " + idLocal);
             throw new ComandaServiceException("US001", "No existe el Local n° " + idLocal);
         }
-    }
+    }       
 
     @Override
     public List<Local> buscarTodosPorUsuario(Usuario usuario) {

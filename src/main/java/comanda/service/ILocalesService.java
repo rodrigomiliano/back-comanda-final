@@ -12,5 +12,5 @@ public interface ILocalesService {
     void eliminar(int idLocal) throws Exception;
     Local buscarLocal(int idLocal) throws ComandaServiceException;
 
-    List<Local> buscarTodosPorUsuario(Usuario usuario);
+    List<Local> buscarTodosPorUsuario(Usuario usuario);    
 }
