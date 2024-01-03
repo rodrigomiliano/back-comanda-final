@@ -1,5 +1,6 @@
 package comanda.service.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import comanda.entity.Categoria;
+import comanda.entity.Local;
+import comanda.repository.LocalesRepository;
 import comanda.repository.CategoriasRepository;
 import comanda.service.ComandaServiceException;
 import comanda.service.ICategoriasService;
@@ -20,6 +23,10 @@ public class CategoriasService implements ICategoriasService {
 
 	@Autowired
 	private CategoriasRepository repoCategorias;
+	
+	@Autowired
+    private LocalesRepository localesRepository; // Inyecta tu repositorio de locales aquí
+
 
 	public List<Categoria> buscarTodas() {
 		System.out.println("------------------------------------------------------------");
@@ -83,5 +90,26 @@ public class CategoriasService implements ICategoriasService {
 			System.out.println("No existe la Categoria n° " + idCategoria);
 			throw new ComandaServiceException("PS002", "No existe la Categoria n° " + idCategoria);
 		}
+	}
+
+		
+	@Override
+	public List<Local> obtenerLocalesPorCategoria(int idCategoria) {
+	    List<Object[]> result = localesRepository.findLocalesWithMaxProductByCategoriaId(idCategoria);
+	    List<Local> locales = new ArrayList<>();
+
+	    for (Object[] row : result) {
+	        Local local = new Local();
+	        local.setNombre((String) row[0]);  // Asigna el nombre desde la primera columna
+	        // Asigna los otros atributos del Local desde las otras columnas
+	        // Asegúrate de convertir cada atributo al tipo correspondiente
+	        local.setId((Integer) row[1]);
+	        // Continúa con el mapeo de los otros atributos...
+
+	        // Agrega el local mapeado a la lista de locales
+	        locales.add(local);
+	    }
+
+	    return locales;
 	}
 }

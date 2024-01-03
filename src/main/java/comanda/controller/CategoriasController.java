@@ -1,5 +1,6 @@
 package comanda.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import comanda.controller.dto.request.CategoriaInsertDto;
 import comanda.controller.dto.request.CategoriaUpdateDto;
 import comanda.controller.dto.response.CategoriaResponse;
 import comanda.entity.Categoria;
+import comanda.entity.Local;
 import comanda.service.ComandaServiceException;
 import comanda.service.ICategoriasService;
 import comanda.service.mapper.CategoriaMapper;
@@ -102,5 +104,17 @@ public class CategoriasController {
 		}
 		return "Registro Eliminado";
 	}
+	
+	 // Endpoint para obtener locales relacionados con una categoría específica
+    @GetMapping("/categoria/{id}/locales")
+    public List<Local> obtenerLocalesPorCategoria(@PathVariable("id") int idCategoria) {
+        try {
+            return serviceCategorias.obtenerLocalesPorCategoria(idCategoria);
+        } catch (Exception e) {
+            // Manejo de errores
+            e.printStackTrace();
+            return new ArrayList<>(); // o algún otro manejo de errores
+        }
+    }
 
 }
