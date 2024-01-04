@@ -100,12 +100,15 @@ public class CategoriasService implements ICategoriasService {
 
 	    for (Object[] row : result) {
 	        Local local = new Local();
-	        local.setNombre((String) row[0]);  // Asigna el nombre desde la primera columna
+	        local.setId((Integer) row[0]);// Asigna el nombre desde la primera columna
 	        // Asigna los otros atributos del Local desde las otras columnas
 	        // Asegúrate de convertir cada atributo al tipo correspondiente
-	        local.setId((Integer) row[1]);
-	        // Continúa con el mapeo de los otros atributos...
-
+	        local.setNombre((String) row[1]);
+	        local.setCalle((String) row[2]);  
+	        local.setAltura((Integer) row[3]);
+	        local.setCodigo_postal((Integer) row[4]);
+	        local.setTelefono((Integer) row[5]);
+	        local.setImagen((String) row[6]);        
 	        // Agrega el local mapeado a la lista de locales
 	        locales.add(local);
 	    }
