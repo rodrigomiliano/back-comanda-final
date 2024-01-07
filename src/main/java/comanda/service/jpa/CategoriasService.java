@@ -65,6 +65,7 @@ public class CategoriasService implements ICategoriasService {
 		// por el Body
 		categoriaNew.setNombre(categoria.getNombre());
 		categoriaNew.setImagen(categoria.getImagen());
+		categoriaNew.setDestacado(categoria.getDestacado());
 
 		LOGGER.info("categoria: " + categoria.toString());
 		LOGGER.info(">>>>>> Categoria a guardar via el repo: " + categoria);
